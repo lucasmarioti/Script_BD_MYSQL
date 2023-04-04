@@ -1,0 +1,594 @@
+create table cliente(
+	idcliente int primary key auto_increment,
+	nome varchar(30) not null,
+	cpf varchar(11) unique,
+	email varchar(50) unique,
+	sexo enum('m','f') not null
+);
+
+
+create table endereco(
+	idendereco int primary key auto_increment,
+	rua varchar(30) not null,
+	numero int(5) not null,
+	cidade varchar(30) not null,
+	estado_UF char(2) not null,
+	id_cliente int unique,
+	foreign key (id_cliente) references cliente(idcliente)
+
+);
+
+create table telefone(
+	idtelefone int primary key auto_increment,
+	tipo enum('cel','res','com'),
+	numero varchar(12),
+	id_cliente int,
+	foreign key (id_cliente) references cliente(idcliente)
+);
+
+
+insert into cliente values(null,'lucas','21458763214','mario@gamil.com','m');
+
+insert into cliente values(null,'maria','12547856547','maria@gamil.com','f');
+insert into cliente values(null,'claudia','24785632478','claudia@gamil.com','f');
+insert into cliente values(null,'jeferson','98753246587','jjef@gamil.com','m');
+insert into cliente values(null,'katia','24587632548','katia@gamil.com','f');
+insert into cliente values(null,'pedro','57863245689','pedro@gamil.com','m');
+insert into cliente values(null,'lucia','55478632545','lucia@gamil.com','f');
+
+
+insert into endereco values(null,'almirante','204','santo andre','sp','2');
+insert into endereco values(null,'senador flaquer','2040','santo andre','sp','1');	
+insert into endereco values(null,'damião correia','72','copacabana','rj','3');	
+insert into endereco values(null,'cotia','120','belo horizonte','mg','5');
+insert into endereco values(null,'jose camargo','333','balneario','es','4');
+insert into endereco values(null,'maracana','20','leblon','rj','7');
+insert into endereco values(null,'paulista','7204','sao paulo','sp','6');
+
+
+insert into telefone values(null,'res','21358456','2');
+insert into telefone values(null,'cel','546823547','2');
+insert into telefone values(null,'com','45785625','2');
+insert into telefone values(null,'cel','458756322','3');
+insert into telefone values(null,'com','54896632','4');
+insert into telefone values(null,'cel','852354477','5');
+insert into telefone values(null,'res','47856258','5');
+insert into telefone values(null,'cel','587563214','6');
+insert into telefone values(null,'res','45874587','7');
+insert into telefone values(null,'com','65478932','7');	
+
+
+/* inner join */
+
+select nome, sexo, rua, cidade
+from cliente
+inner join endereco
+on idcliente= id_cliente;
+
+/* inner join com ponteiros */
+
+select cliente.nome, cliente.sexo, endereco.rua, endereco.cidade, telefone.tipo, telefone.numero
+from cliente
+inner join endereco
+on cliente.idcliente= endereco.id_cliente
+inner join telefone
+on cliente.idcliente= telefone.id_cliente;
+
+select c.nome, c.sexo, e.rua, e.cidade, t.tipo, t.numero
+from cliente c
+inner join endereco e
+on c.idcliente= e.id_cliente
+inner join telefone t
+on c.idcliente= t.id_cliente;
+
+
+                                                                     /*update*/
+update cliente
+set sexo = 'f'                                                    
+where idcliente = 7;
+
+                                                                     /*delete*/    
+delete from cliente where idcliente = 7;
+
+
+
+/* DML  data manupulation language*/
+insert
+
+where
+
+update
+
+delete
+
+/* DDL  data definition languge*/
+
+                                                              /*alterando tabela*/
+create table produto(
+	idproduto int primary key auto_increment,
+	nome_produto varchar(30) not null,
+	valor_produto float(10,2) not null,
+	frete float (10,2) not null
+);
+
+alter table produto 
+change valor_produto valor_produto varchar(20);
+
+alter table produto
+modify valor_produto varchar(30) not null;
+
+alter table produto
+add peso float(10,2) not null;
+
+alter table produto 
+drop column peso;
+
+alter table produto 
+add column peso float(10,2) not null
+after nome_produto;
+
+alter table produto 
+add column peso float(10,2) not null
+first;
+
+
+INSERT INTO CLIENTE VALUES(NULL,'FLAVIO','42654789542','FLAVIO@IG.COM','m');
+INSERT INTO CLIENTE VALUES(NULL,'ANDRE','45786547895','ANDRE@GLOBO.COM','m');
+INSERT INTO CLIENTE VALUES(NULL,'GIOVANA','45863215987',NULL,'f');
+INSERT INTO CLIENTE VALUES(NULL,'KARLA','45872358745','KARLA@GMAIL.COM','f');
+INSERT INTO CLIENTE VALUES(NULL,'DANIELE','45876658952','DANIELE@GMAIL.COM','f');
+INSERT INTO CLIENTE VALUES(NULL,'LORENA','57845478547',NULL,'f');
+INSERT INTO CLIENTE VALUES(NULL,'EDUARDO','54787412301',NULL,'m');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','01365478963','ANTONIO@IG.COM','m');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','25478563256','ANTONIO@UOL.COM','m');
+INSERT INTO CLIENTE VALUES(NULL,'ELAINE','54782145698','ELAINE@GLOBO.COM','f');
+INSERT INTO CLIENTE VALUES(NULL,'CARMEM','52478965230','CARMEM@IG.COM','f');
+INSERT INTO CLIENTE VALUES(NULL,'ADRIANA','45781235478','ADRIANA@GMAIL.COM','f');
+INSERT INTO CLIENTE VALUES(NULL,'JOICE','23014501230','JOICE@GMAIL.COM','f');
+
+
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA DESC','210','B. HORIZONTE','MG',8);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GUEDES','240','B. HORIZONTE','MG',9);
+INSERT INTO ENDERECO VALUES(NULL,'RUA MAIA LACERDA','570','RIO DE JANEIRO','RJ',10);
+INSERT INTO ENDERECO VALUES(NULL,'RUA VISCONDESSA','472','RIO DE JANEIRO','RJ',11);
+INSERT INTO ENDERECO VALUES(NULL,'RUA NELSON MANDELA','520','RIO DE JANEIRO','RJ',12);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ARAUJO LIMA','201','VITORIA','ES',13);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CASTRO ALVES','012','RIO DE JANEIRO','RJ',14);
+INSERT INTO ENDERECO VALUES(NULL,'AV CAPITAO ANTUNES','478','CURITIBA','PR',15);
+INSERT INTO ENDERECO VALUES(NULL,'AV CARLOS BARROSO','789','SAO PAULO','SP',16);
+INSERT INTO ENDERECO VALUES(NULL,'ALAMEDA SAMPAIO',' 741','CURITIBA','PR',17);
+INSERT INTO ENDERECO VALUES(NULL,'RUA DA LAPA','555','SAO PAULO','SP',18);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GERONIMO','444','RIO DE JANEIRO','RJ',19);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GOMES FREIRE','44','RIO DE JANEIRO','RJ',20);
+
+
+INSERT INTO TELEFONE VALUES(NULL,'RES','68976565',9);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99656675',9);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','33567765',11);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','88668786',11);
+INSERT INTO TELEFONE VALUES(NULL,'COM','55689654',11);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88687979',12);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88965676',13);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','89966809',15);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88679978',16);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99655768',17);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89955665',18);
+INSERT INTO TELEFONE VALUES(NULL,'RES','77455786',19);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89766554',19);
+INSERT INTO TELEFONE VALUES(NULL,'RES','77755785',20);
+INSERT INTO TELEFONE VALUES(NULL,'COM','44522578',20);
+
+
+select cliente.idcliente, cliente.nome, cliente.cpf, cliente.sexo, endereco.rua, endereco.cidade, telefone.tipo, telefone.numero
+from cliente
+inner join endereco
+on cliente.idcliente = endereco.id_cliente
+inner join telefone
+on cliente.idcliente = telefone.id_cliente
+where sexo = 'm';
+
+SELECT C.IDCLIENTE, C.NOME, C.SEXO, C.EMAIL, C.CPF, 
+	   E.RUA, E.BAIRRO, E.CIDADE, E.ESTADO, 
+	   T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE SEXO = 'F';
+
+
+select count(*) as qauntidade, sexo
+from cliente 
+group by sexo;
+
+
+SELECT C.IDCLIENTE, C.EMAIL, C.NOME,
+	   E.CIDADE, 
+	   T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE SEXO = 'F'
+and cidade = 'rio de janeiro';
+
+
+SELECT C.NOME, C.EMAIL, T.NUMERO AS CELULAR
+FROM CLIENTE C  
+INNER JOIN ENDERECO E  
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T  
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE ESTADO_UF = 'RJ'
+AND TIPO = 'CEL';
+
+
+SELECT C.NOME, C.EMAIL, T.NUMERO AS CELULAR
+FROM CLIENTE C  
+INNER JOIN ENDERECO E  
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T  
+ON C.IDCLIENTE = T.ID_CLIENTE
+WHERE ESTADO_UF = 'SP'
+AND TIPO = 'CEL'
+AND SEXO = 'F';
+
+
+SELECT  C.NOME, 
+		IFNULL(C.EMAIL,'NÃO POSSUI EMAIL')AS 'EMAIL', 
+		E.ESTADO_UF, 
+		T.NUMERO
+FROM CLIENTE C  
+INNER JOIN ENDERECO E  
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T  
+ON C.IDCLIENTE = T.ID_CLIENTE;
+
+                           								/* views  */
+
+
+create view relatorio as
+SELECT C.NOME, C.EMAIL, C.CPF, 
+	   E.RUA, E.CIDADE, E.ESTADO_UF, 
+	   T.TIPO, T.NUMERO
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE;
+ 
+
+select * from relatorio;
+
+
+
+															/* group by */
+
+select * from relatorio
+order by 1;
+
+
+select * from relatorio
+order by nome,estado_UF;
+
+select * from relatorio
+order by nome desc;
+
+
+										/*stored procedures */ /* necessario mudar delimiter */
+
+create procedure nome()
+begin	
+
+		(programação)
+		select 'universidade dos dados' as empresa;
+
+end $		
+
+para chamar procedures é call _______;
+
+
+delimiter $
+
+create procedure conta(numero1 int,numero2 int)
+begin
+
+		select numero1 + numero2 as conta;
+
+end $			
+
+														/* procedures */
+
+create database facul;
+
+create table curso( 
+	idcurso int primary key auto_increment,
+	nome varchar (30) not null, 
+	horas int (3) not null,
+	valor float (10,2) not null
+); 
+
+insert into curso values(null,'java','40','500')_
+insert into curso values(null,'SQL','60','700');
+
+
+delimiter &
+
+create procedure cad_curso(p_nome varchar(30), p_horas int(3), p_valor float(10,2))
+begin
+	 	insert into curso values(null, p_nome, p_horas. p_valor);
+
+end 
+&	
+
+call cad_curso('power bi','30','1200');
+call cad_curso('programação c',50,3000);
+call cad_curso('ciência de dados',60,2100);
+call cad_curso('python',80,1500);
+
+
+create procedure  com_cursos()
+begin
+	 	select * from curso;
+
+end 
+&	
+
+
+						/*constraint, jeito certo de criar tables e add chaves identificadoras */
+
+create table time(
+	idjogador int,
+	nome varchar(30) not null
+);
+
+create table email(
+	idemail int,
+	email varchar(30) not null,
+	id_jogador int 
+);
+
+alter table time add constraint pk_idjogador
+primary key(idjogador);
+
+alter table email add constraint fk_id_jogador
+foreign key (id_jogador) references time(idjogador);
+
+
+
+													/*  triggers  */
+
+
+create database cadastros;		
+
+create table usuario(
+	idusuario int primary key auto_increment,
+	nome varchar(30) not null,
+	login varchar(30) not null,
+	senha varchar(100) not null 
+);																
+
+
+create table bkp_usuario(
+	idbackup int primary key auto_increment,
+	idusuario int,
+	nome varchar(30),
+	login varchar(30)
+
+);
+
+
+create trigger backup_usuario
+before delete on usuario
+for each row 
+begin
+
+	insert into bkp_usuario values(null,old.idusuario,old.nome,old.login);
+
+end
+$ 	
+
+
+insert into usuario values(null,'oscar','oscar4667','oscarzito');
+
+
+delete from usuario where idusuario = 1;	
+
+
+
+
+									/* trigger com backup logico e aditoria */
+
+
+
+create database loja;
+
+
+create table produto(
+	idproduto int primary key auto_increment,
+	nome varchar(30) not null,
+	valor float(10,2) not null
+);
+
+
+create database backup;
+
+
+create table backup.bkp_produto(
+	id_backup int primary key auto_increment,
+	idproduto int,
+	nome varchar(30) not null,
+	valor_old float(10,2) not null,
+	valor_new float(10,2) not null,
+	data datetime,
+	usuario varchar(30),
+	evento char(1)
+
+);
+	
+									
+insert into produto values(null, '1000', 20.00);
+insert into produto values(null, '2000', 230.00);
+insert into produto values(null, '3000', 30.00);
+insert into produto values(null, '4000', 40.00);
+insert into produto values(null, '5000', 50.00);
+insert into produto values(null, '6000', 60.00);
+
+
+create trigger audi_prod
+after update on produto 
+for each row
+begin
+
+	insert into backup.bkp_produto values(null,old.idproduto,
+	old.nome,old.valor,new.valor,now(),current_user(),'u');
+
+end 
+$									
+
+
+update produto set valor = 100
+where idproduto = 2;	
+
+
+
+                                      			/*  cursores */
+
+
+
+
+CREATE TABLE VENDEDORES(
+	IDVENDEDOR INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(50),
+	JAN INT,
+	FEV INT,
+	MAR INT
+);
+
+insert into vendedores values(null, 'araldo', 24871,54875,23547);
+insert into vendedores values(null, 'clovis', 45687,54787,36563);
+insert into vendedores values(null, 'cleiton', 85214,8752,54784);
+insert into vendedores values(null, 'claudia', 55555,33333,77777);
+insert into vendedores values(null, 'karen', 44475,65478,32587);
+insert into vendedores values(null, 'teodoro', 55548,66985,88888);	
+
+
+CREATE TABLE VEND_TOTAL(
+	NOME VARCHAR(50),
+	JAN INT,
+	FEV INT,
+	MAR INT,
+	TOTAL INT,
+	MEDIA INT
+);	
+
+
+CREATE PROCEDURE INSEREDADOS()
+BEGIN
+		DECLARE FIM INT DEFAULT 0;
+		DECLARE VAR1, VAR2, VAR3, VTOTAL, VMEDIA INT;
+		DECLARE VNOME VARCHAR(50);
+		
+		DECLARE REG CURSOR FOR(
+			SELECT NOME, JAN, FEV, MAR FROM VENDEDORES
+		);
+		
+		DECLARE CONTINUE HANDLER FOR NOT FOUND SET FIM = 1;
+		
+		OPEN REG;
+		
+		REPEAT
+		
+			FETCH REG INTO VNOME, VAR1, VAR2, VAR3;
+			IF NOT FIM THEN
+			
+				SET VTOTAL = VAR1 + VAR2 + VAR3;
+				SET VMEDIA = VTOTAL / 3;
+				
+				INSERT INTO VEND_TOTAL VALUES(VNOME,VAR1,VAR2,VAR3,VTOTAL,VMEDIA);
+				
+			END IF;
+			
+		UNTIL FIM END REPEAT;
+		
+		CLOSE REG;
+END
+$
+		
+call INSEREDADOS();
+
+
+
+									/* A47 SEGUNDA E TERCEIRAS FORMAS NORMAIS */
+
+/*
+	 PRIMEIRA FN
+	 
+	 ATOMICIDADE - UM CAMPO NAO PODE SER DIVISIVEL
+	 UM CAMPO NAO PODE SER VETORIZADO
+	 PK CHAVE PRIMARIA
+
+*/
+
+CREATE DATABASE CONSULTORIO;
+
+CREATE TABLE PACIENTE(
+	IDPACIENTE INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	EMAIL VARCHAR(30),
+	NASCIMENTO DATE
+);
+
+CREATE TABLE MEDICO(
+	IDMEDICO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	ESPECIALIDADE VARCHAR(30),
+	FUNCIONARIO ENUM('S','N')
+);
+
+CREATE TABLE HOSPITAL(
+	IDHOSPITAL INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	BAIRRO VARCHAR(30),
+	CIDADE VARCHAR(30),
+	ESTADO CHAR(2)
+);
+
+CREATE TABLE CONSULTA(
+	IDCONSULTA INT PRIMARY KEY AUTO_INCREMENT,
+	ID_PACIENTE INT,
+	ID_MEDICO INT,
+	ID_HOSPITAL INT,
+	DATA DATETIME,
+	DIAGNOSTICO VARCHAR(50)
+);
+
+CREATE TABLE INTERNACAO(
+	IDINTERNACAO INT PRIMARY KEY AUTO_INCREMENT,
+	ENTRADA DATETIME,
+	QUARTO INT,
+	SAIDA DATETIME,
+	OBSERVACOES VARCHAR(50),
+	ID_CONSULTA INT UNIQUE	
+); 
+
+
+ALTER TABLE CONSULTA ADD CONSTRAINT FK_CONSULTA_PACIENTE
+FOREIGN KEY (ID_PACIENTE) REFERENCES PACIENTE(IDPACIENTE);
+
+
+ALTER TABLE CONSULTA ADD CONSTRAINT FK_CONSULTA_MEDICO
+FOREIGN KEY (ID_MEDICO) REFERENCES MEDICO(IDMEDICO);
+
+
+ALTER TABLE CONSULTA ADD CONSTRAINT FK_CONSULTA_HOSPITAL
+FOREIGN KEY (ID_HOSPITAL) REFERENCES HOSPITAL(IDHOSPITAL);
+
+
+ALTER TABLE INTERNACAO ADD CONSTRAINT FK_INTERNACAO_CONSULTA
+FOREIGN KEY (ID_CONSULTA) REFERENCES CONSULTA(IDCONSULTA);
